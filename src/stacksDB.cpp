@@ -19,6 +19,7 @@
 #include <iostream>
 #include <mysql++.h>
 #include "stacksDB.h"
+#include "SNP.h"
 
 
 int getWhitelist (const char *pcc_db, const char *pcc_server,
@@ -88,6 +89,10 @@ int getAllelesAndCoordinates(const char *pcc_db, const char *pcc_server,
 	for(size_t i=0; i<vi_tags.size(); ++i) {
 		std::cout << vi_tags[i] << std::endl;
 	}
+	//Test the SNP class
+	SNP snp1;
+	snp1.setCoordinate(200);
+	snp1.getCoordinate();
 	// Connect to the sample database.
 	mysqlpp::Connection conn(false);
 	if (conn.connect(pcc_db, pcc_server, pcc_user, pcc_password)) {

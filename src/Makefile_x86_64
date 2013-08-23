@@ -5,14 +5,17 @@ EXECUTABLE := stacksToVCF
 
 all: $(EXECUTABLE)
 
-stacksToVCF: stacksToVCF.o stacksDB.o
-	g++ stacksToVCF.o stacksDB.o $(CXXFLAGS) $(LDFLAGS) $(LDLIBS) -o $(EXECUTABLE)
+stacksToVCF: stacksToVCF.o stacksDB.o SNP.o
+	g++ stacksToVCF.o stacksDB.o SNP.o -o $(EXECUTABLE) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
 stacksToVCF.o: stacksToVCF.cpp
 	g++ -c stacksToVCF.cpp
 
 stacksDB.o: stacksDB.cpp
 	g++ -c stacksDB.cpp $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
+
+SNP.o: SNP.cpp
+	g++ -c SNP.cpp $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
 clean:
 	rm -rf *o $(EXECUTABLE)
