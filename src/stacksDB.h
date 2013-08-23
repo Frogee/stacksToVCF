@@ -19,8 +19,14 @@
 #ifndef  STACKSDB_H_INC
 #define  STACKSDB_H_INC
 
-int testcon (const char *pcc_db, const char *pcc_server,
+#include <vector>
+
+int getWhitelist (const char *pcc_db, const char *pcc_server,
 	       const char *pcc_user, const char *pcc_password);
+
+int getAllelesAndCoordinates(const char *pcc_db, const char *pcc_server,
+	       const char *pcc_user, const char *pcc_password, 
+	       std::vector<int> vi_tags);
 
 
 #endif   /* ----- #ifndef STACKSDB_H_INC  ----- */
