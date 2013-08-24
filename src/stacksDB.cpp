@@ -57,14 +57,6 @@ int getWhitelist (const char *pcc_db, const char *pcc_server,
 			for (size_t i = 0; i < vstr_tags.size(); ++i) {
 				std::cout << vstr_tags[i] << std::endl;
 			}
-			
-			/*std::cout << "We have:" << std::endl;
-			//For each item in the result
-            		mysqlpp::StoreQueryResult::const_iterator it;
-            		for (it = res.begin(); it != res.end(); ++it) {
-                	mysqlpp::Row row = *it;
-			std::cout << "\t Row: " << row[0] << " " << row.field_list() << std::endl;
-            		}*/
         	}
         	else {
 			std::cerr << "Failed to get item list: " << query.error() << std::endl;
@@ -89,51 +81,53 @@ int getAllelesAndCoordinates(const char *pcc_db, const char *pcc_server,
 	for(size_t i=0; i<vi_tags.size(); ++i) {
 		std::cout << vi_tags[i] << std::endl;
 	}
-	//Test the SNP class
-	SNP snp1;
-	/*
-	snp1.setCoordinates(200);
-	snp1.printCoordinates();
-	snp1.printAlleles();
-	snp1.setRefAllele("C");
-	snp1.printAlleles();
-	snp1.setRefAllele("G");
-	snp1.printAlleles();*/
+	//Initialize the vector of SNPs
+	std::vector<SNP> vSNP_snps;
 	// Connect to the sample database.
 	mysqlpp::Connection conn(false);
 	if (conn.connect(pcc_db, pcc_server, pcc_user, pcc_password)) {
 		
-		// Retrieve high quality tags
-		mysqlpp::Query query = conn.query("SELECT tag_id, allele FROM catalog_alleles WHERE tag_id=%0:tagID LIMIT 5");
+		// Retrieve alleles
+		mysqlpp::Query query = conn.query("SELECT tag_id, rank_1, rank_2, col \
+				FROM catalog_snps \
+				WHERE tag_id=%0:tagID \
+				LIMIT 5");
 		query.parse();
-		//Store the tags
-		std::vector<const char*> vc_tags;
-		std::vector<std::string> vstr_tags;
-		if (mysqlpp::StoreQueryResult res = query.store("7352")) {
+		SNP snp;
+		if (mysqlpp::StoreQueryResult res = query.store("180")) {
+			std::cout << "Query successful; parsing" << std::endl;
+			//For each row in the query result
 			for (size_t i = 0; i < res.num_rows(); ++i) {
-				//Conver mysqlpp::String to std::string before pushing back
-				std::string test_str = std::string(res[i]["allele"].data(), res[i]["allele"].length());
-				vstr_tags.push_back(test_str);
-				//Push back the return
-				vc_tags.push_back(res[i]["allele"]);
-				std::cout << res[i]["allele"] << std::endl;
+				snp.setTag(res[i]["tag_id"]);
+				snp.setOffset(res[i]["col"]);
+				snp.setTmpAllele1(res[i]["rank_1"]);
+				snp.setTmpAllele2(res[i]["rank_2"]);
+				snp.printSNP();
+				//Set up a query to get bp and strandedness
+				//Would using a join be faster here?
+				mysqlpp::Query subquery = conn.query("SELECT tag_id, chr, bp, strand \
+						FROM catalog_tags \
+						WHERE tag_id=%0:tagID \
+						LIMIT 1");
+				subquery.parse();
+				if (mysqlpp::StoreQueryResult subres = subquery.store("180")) {
+					std::cout << "Subquery successful; parsing" << std::endl;
+					//For each row in the query result
+					for (size_t j=0; j < subres.num_rows(); ++j) {
+						snp.setChr(subres[j]["chr"]);
+						snp.setTagCoordinates(subres[j]["bp"]);
+						snp.setStrand(subres[j]["strand"]);
+					}
+				} // End subquery
+
+				vSNP_snps.push_back(snp);
 			}
 			std::cout << "Number of rows returned " << res.num_rows() << std::endl;
 			
-			for (size_t i = 0; i < vc_tags.size(); ++i) {
-				std::cout << vc_tags[i] << std::endl;
+			for (size_t i = 0; i < vSNP_snps.size(); ++i) {
+				vSNP_snps[i].printSNP();
 			}	
-			for (size_t i = 0; i < vstr_tags.size(); ++i) {
-				std::cout << vstr_tags[i] << std::endl;
-			}
-			
-			/*std::cout << "We have:" << std::endl;
-			//For each item in the result
-            		mysqlpp::StoreQueryResult::const_iterator it;
-            		for (it = res.begin(); it != res.end(); ++it) {
-                	mysqlpp::Row row = *it;
-			std::cout << "\t Row: " << row[0] << " " << row.field_list() << std::endl;
-            		}*/
+			//return vSNP_snps;	
         	}
         	else {
 			std::cerr << "Failed to get item list: " << query.error() << std::endl;

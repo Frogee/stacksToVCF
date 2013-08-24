@@ -26,9 +26,18 @@ class SNP {
 		SNP();
 		//Destructors
 		//~SNP();
+		//General members
+		void printSNP();
+		//Members for tag
+		void setTag(int tagID);
 		//Members for coordinates
+		void setStrand(mysqlpp::String strandtype);
+		void setChr(mysqlpp::String chromosome);
 		void printCoordinates();
 		void setCoordinates(int coord);
+		void setTagCoordinates(int coord);
+		void printOffset();
+		void setOffset(int col);
 		//Members for alleles
 		void printAlleles();
 		void setRefAllele(const char *allele);   
@@ -37,6 +46,11 @@ class SNP {
 		void setTmpAllele2(const char *allele);
 	private:
 		int coordinate;
+		int tag_coordinate;
+		int tag;
+		int offset;
+		std::string strand;
+		std::string chr;
 		const char *ref_allele;
 	 	const char *alt_allele;
 		const char *tmp_allele1;
