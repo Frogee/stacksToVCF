@@ -91,8 +91,14 @@ int getAllelesAndCoordinates(const char *pcc_db, const char *pcc_server,
 	}
 	//Test the SNP class
 	SNP snp1;
-	snp1.setCoordinate(200);
-	snp1.getCoordinate();
+	/*
+	snp1.setCoordinates(200);
+	snp1.printCoordinates();
+	snp1.printAlleles();
+	snp1.setRefAllele("C");
+	snp1.printAlleles();
+	snp1.setRefAllele("G");
+	snp1.printAlleles();*/
 	// Connect to the sample database.
 	mysqlpp::Connection conn(false);
 	if (conn.connect(pcc_db, pcc_server, pcc_user, pcc_password)) {

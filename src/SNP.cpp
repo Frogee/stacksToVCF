@@ -19,12 +19,47 @@
 #include <iostream>
 #include "SNP.h"
 
-void SNP::getCoordinate()
+//Constructors
+SNP::SNP()
+{
+	coordinate=0;
+	ref_allele = alt_allele = tmp_allele1 = tmp_allele2 = "N";
+}
+//Coordinate functions
+void SNP::printCoordinates()
 {
 	std::cout << "SNP coordinate: " << coordinate << std::endl;
 }
 
-void SNP::setCoordinate(int coord)
+void SNP::setCoordinates(int coord)
 {
 	coordinate = coord;
+}
+
+//Allele functions
+void SNP::printAlleles()
+{
+	std::cout << "Reference allele: " << ref_allele << std::endl <<
+		"Alternate allele: " << alt_allele << std::endl <<
+		"tmp allele 1: " << tmp_allele1 << std::endl <<
+		"tmp allele 2: " << tmp_allele2 << std::endl;
+}
+void SNP::setRefAllele(const char *allele)
+{
+	ref_allele = allele;
+}
+
+void SNP::setAltAllele(const char *allele)
+{
+	alt_allele = allele;
+}
+
+void SNP::setTmpAllele1(const char *allele)
+{
+	tmp_allele1 = allele;
+}
+
+void SNP::setTmpAllele2(const char *allele)
+{
+	tmp_allele2 = allele;
 }

@@ -18,7 +18,6 @@
 #include	<stdlib.h>
 #include	<iostream>
 #include	"stacksDB.h"
-#include	"SNP.h"
 
 /* 
  * ===  FUNCTION  ======================================================================

@@ -22,9 +22,24 @@
 
 class SNP {
 	public:
-		void getCoordinate();
-		void setCoordinate(int coord);
+		//Constructors
+		SNP();
+		//Destructors
+		//~SNP();
+		//Members for coordinates
+		void printCoordinates();
+		void setCoordinates(int coord);
+		//Members for alleles
+		void printAlleles();
+		void setRefAllele(const char *allele);   
+		void setAltAllele(const char *allele);
+		void setTmpAllele1(const char *allele);
+		void setTmpAllele2(const char *allele);
 	private:
 		int coordinate;
+		const char *ref_allele;
+	 	const char *alt_allele;
+		const char *tmp_allele1;
+		const char *tmp_allele2;
 };
 #endif   /* ----- #ifndef SNP_H_INC  ----- */
