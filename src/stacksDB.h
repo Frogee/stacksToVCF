@@ -20,11 +20,13 @@
 #define  STACKSDB_H_INC
 
 #include <vector>
+#include <mysql++.h>
+#include "SNP.h"
 
-int getWhitelist (const char *pcc_db, const char *pcc_server,
+std::vector<int> getWhitelist (const char *pcc_db, const char *pcc_server,
 	       const char *pcc_user, const char *pcc_password);
 
-int getAllelesAndCoordinates(const char *pcc_db, const char *pcc_server,
+std::vector<SNP> getAllelesAndCoordinates(const char *pcc_db, const char *pcc_server,
 	       const char *pcc_user, const char *pcc_password, 
 	       std::vector<int> vi_tags);
 

@@ -28,22 +28,33 @@ class SNP {
 		//~SNP();
 		//General members
 		void printSNP();
+		void flipStrand();
+		void updateAlleles();
 		//Members for tag
 		void setTag(int tagID);
+		int getTag();
 		//Members for coordinates
 		void setStrand(mysqlpp::String strandtype);
+		std::string getStrand();
 		void setChr(mysqlpp::String chromosome);
+		std::string getChr();
 		void printCoordinates();
 		void setCoordinates(int coord);
 		void setTagCoordinates(int coord);
+		int getCoord();
+		int getTagCoord();
 		void printOffset();
 		void setOffset(int col);
+		int getOffset();
 		//Members for alleles
 		void printAlleles();
-		void setRefAllele(const char *allele);   
-		void setAltAllele(const char *allele);
-		void setTmpAllele1(const char *allele);
-		void setTmpAllele2(const char *allele);
+		void setRefAllele(mysqlpp::String allele);
+		std::string getRefAllele();
+	     	void setRefAllele(std::string allele);	
+		void setAltAllele(mysqlpp::String allele);
+		std::string getAltAllele();
+		void setTmpAllele1(mysqlpp::String allele);
+		void setTmpAllele2(mysqlpp::String allele);
 	private:
 		int coordinate;
 		int tag_coordinate;
@@ -51,9 +62,9 @@ class SNP {
 		int offset;
 		std::string strand;
 		std::string chr;
-		const char *ref_allele;
-	 	const char *alt_allele;
-		const char *tmp_allele1;
-		const char *tmp_allele2;
+		std::string ref_allele;
+		std::string alt_allele;
+		std::string tmp_allele1;
+		std::string tmp_allele2;
 };
 #endif   /* ----- #ifndef SNP_H_INC  ----- */

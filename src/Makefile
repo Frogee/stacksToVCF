@@ -5,11 +5,14 @@ EXECUTABLE := stacksToVCF
 
 all: $(EXECUTABLE)
 
-stacksToVCF: stacksToVCF.o stacksDB.o SNP.o
-	g++ stacksToVCF.o stacksDB.o SNP.o -o $(EXECUTABLE) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
+stacksToVCF: stacksToVCF.o stacksDB.o SNP.o biopRefAllele.o
+	g++ stacksToVCF.o stacksDB.o SNP.o biopRefAllele.o -o $(EXECUTABLE) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
 stacksToVCF.o: stacksToVCF.cpp
 	g++ -c stacksToVCF.cpp $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
+
+biopRefAllele.o: biopRefAllele.cpp
+	g++ -c biopRefAllele.cpp $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
 
 stacksDB.o: stacksDB.cpp
 	g++ -c stacksDB.cpp $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
