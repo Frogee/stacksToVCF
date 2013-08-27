@@ -8,5 +8,8 @@ This Makefiles contained in the src directory are tailored for either 32-bit or 
 
 This also requires Biopieces (http://code.google.com/p/biopieces/) be present in the PATH variable, as it makes an external call to the get_genome_seq biopiece to pull information from an indexed reference genome (additional pointers on installing Biopieces can be found here: http://codextechnicanum.blogspot.com/2013/07/installation-of-biopieces-on-ubuntu.html). The name of the reference genome is currently hard-coded and would need to be changed for use on other biopieces indexed reference genomes.
 
+Typical use case:
+     stacksToVCF -d databaseName -s localhost -u root
+     
 Known issues:
 Stacks appears to miscalcuate coordinates when an indel is present in a tag. SNPs contained in tags with indels cannot be accurately located at this time.
