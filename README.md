@@ -13,4 +13,5 @@ Typical use case:
      stacksToVCF -d databaseName -s localhost -u root
      
 Known issues:
+
 Stacks appears to miscalcuate coordinates when an indel is present in a tag. SNPs contained in tags with indels cannot be accurately located at this time.
