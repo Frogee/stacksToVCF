@@ -27,7 +27,7 @@
 
 std::vector<SNP> getRefAllele(std::vector<SNP> vSNP_snps)
 {
-	std::cerr << "Running getRefAllele" << std::endl;
+	std::cerr << "Running getRefAllele; this may take a while" << std::endl;
 	for (size_t i = 0; i < vSNP_snps.size(); ++i) {
 		//First calculate the correct coordinate
 		if (vSNP_snps[i].getStrand() == "+") {
@@ -37,7 +37,10 @@ std::vector<SNP> getRefAllele(std::vector<SNP> vSNP_snps)
 			vSNP_snps[i].setCoordinates(vSNP_snps[i].getTagCoord() - vSNP_snps[i].getOffset());
 			vSNP_snps[i].flipStrand();
 		}
-		else { std::cerr << "Strand inconclusive" << std::endl;}
+		else { 
+			std::cerr << "Strand inconclusive" << std::endl;
+			vSNP_snps[i].setQualFlag("FAIL");
+		}
 		
 		//Convert chromosome string to char *
 		std::string str_chr = vSNP_snps[i].getChr();
@@ -57,6 +60,8 @@ std::vector<SNP> getRefAllele(std::vector<SNP> vSNP_snps)
 		coordinates[str_coordinates.size()] = '\0';
 		
 		//Run biopieces to extract nucleotide at position:
+		//TODO: This is a very slow step in the program;
+		//Find a more efficient way to extract the reference allele
 		char command[200];
 		sprintf(command, "get_genome_seq -g Sbi1 -c %s -b %s -l 1 | awk '$1 == \"SEQ:\" {print $2}'", chromosome, coordinates);
 		char output[100];

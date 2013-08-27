@@ -28,6 +28,7 @@ SNP::SNP()
 	ref_allele = alt_allele = tmp_allele1 = tmp_allele2 = "N";
 	chr = "chromosome_n";
 	strand = "null";
+	qualFlag = "null";
 }
 //General functions
 void SNP::printSNP()
@@ -42,7 +43,8 @@ void SNP::printSNP()
 		"\t" << "Reference allele: " << ref_allele << std::endl <<
 		"\t" << "Alt allele: " << alt_allele << std::endl <<
 		"\t" << "Tmp allele1: " << tmp_allele1 << std::endl <<
-		"\t" << "Tmp allele2: " << tmp_allele2 << std::endl;
+		"\t" << "Tmp allele2: " << tmp_allele2 << std::endl <<
+		"\t" << "Quality flag " << qualFlag << std::endl;
 }
 
 void SNP::flipStrand()
@@ -66,12 +68,17 @@ void SNP::updateAlleles()
 {
 	if (ref_allele == tmp_allele1) {
 		alt_allele = tmp_allele2;
+		setQualFlag("PASS");
 	}
 	else if (ref_allele == tmp_allele2) {
 		alt_allele = tmp_allele1;
+		setQualFlag("PASS");
 	}
 	else {
-		std::cerr << "Warning: Tri-allelic SNP " << std::endl;
+		std::cerr << "Warning: Tri-allelic SNP at " <<
+		       chr << " " << coordinate << std::endl;
+		setQualFlag("FAIL");
+		printSNP();
 	}
 }
 
@@ -190,3 +197,15 @@ void SNP::setTmpAllele2(mysqlpp::String allele)
 {
 	tmp_allele2 = std::string(allele.data(), allele.length());
 }
+
+//Quality flag members
+std::string SNP::getQualFlag()
+{
+	return qualFlag;
+}
+
+void SNP::setQualFlag(std::string flag)
+{
+	qualFlag = flag;
+}
+

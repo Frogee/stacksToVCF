@@ -55,6 +55,9 @@ class SNP {
 		std::string getAltAllele();
 		void setTmpAllele1(mysqlpp::String allele);
 		void setTmpAllele2(mysqlpp::String allele);
+		//Members for quality flag
+		std::string getQualFlag();
+		void setQualFlag(std::string flag);
 	private:
 		int coordinate;
 		int tag_coordinate;
@@ -66,5 +69,6 @@ class SNP {
 		std::string alt_allele;
 		std::string tmp_allele1;
 		std::string tmp_allele2;
+		std::string qualFlag;
 };
 #endif   /* ----- #ifndef SNP_H_INC  ----- */
