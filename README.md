@@ -10,7 +10,7 @@ This also requires Biopieces (http://code.google.com/p/biopieces/) be present in
 
 Typical use case:
 
-     stacksToVCF -d databaseName -s localhost -u root
+     stacksToVCF -d databaseName -s localhost -u root > outfile.vcf
      
 Known issues:
 
