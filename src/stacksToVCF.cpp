@@ -25,7 +25,7 @@ int main ( int argc, char *argv[] )
 {
 	const char *database, *server, *user, *password;
 	int opt;
-
+	//TODO: Clean up this command line parsing, and fix dealing with the password. Doesn't really work as written.
 	while ((opt = getopt(argc, argv, "d:s:u:p")) != -1) {
 		switch (opt) {
 			case 'd':
